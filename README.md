@@ -1,2 +1,2 @@
-# NCC_Morphs
-This repository contains molecular files, data obtained from morphing and APBS electrostatics of NCC molecules, which is used modelling ion channels in DCT.
+# Ion Channels, NCC and Gitelman Syndrome
+Our goal is to simulate the ion channel in the DCT(Distal Convoluted Tubule) in Nephron and deal with Gitelman syndrome which mainly occurs in a protein called NCC. The mutations occured in it causes the sydrome.

@@ -11,6 +11,7 @@ cmd.load(fr"c:\Users\LENOVO\Desktop\temp\gtm-475-CYS-1.pdb")
 cmd.select("Na_atoms", "name Na")
 
 #Selecting the residues with 'within' command
+#The number after 'within' is the radius in Angstrom
 cmd.select("radial_residues", "chain A within 10 of Na_atoms")
 
 #Save as pdb

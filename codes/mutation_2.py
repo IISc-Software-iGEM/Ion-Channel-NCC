@@ -1,5 +1,5 @@
-# This file is to be run in pymol, first fetch the either 7yg0/7y6i then use `run mutation_2.py` after directing into the directory where it is saved.
-# This file lets you save all the rotamers in a mutation given the residue number and mutant 
+# This file is to be run in pymol, after directing into the directory where it is saved.
+# This file lets you save all the morph states of the first rotamer in a mutation given the residue number and mutant 
 
 
 from pymol import cmd
@@ -29,26 +29,46 @@ def everything():
         cmd.save(fr"C:\Users\LENOVO\Downloads\gtm-{n}-{mutant}.pdb")
 
 #This function contains the actual code for this file
-def perMutant(num):
+def perMutant(protein, num):
     # Loop over the lines
     for line in lines:
         n, mutant = line.strip().split()
         if num == int(n):
              # Use the values in your code
+            cmd.fetch(protein)
             cmd.wizard("mutagenesis")
             cmd.get_wizard().set_mode(mutant)
             cmd.get_wizard().do_select(f"chain A and resid {n}")
-            # To get alll the rotamers...
-            totfnum = cmd.count_frames() 
-            for fnum in range(1, totfnum + 1):
-                cmd.frame(fnum)
-                cmd.save(fr"C:\Users\LENOVO\Desktop\iGEM\Mutations\gtlmn-7y6i\gtm-{n}-{mutant}-{fnum}.pdb")
-            
+            # To get minimum strain, comment the next line. Else, you ll get max %
+            cmd.frame(1)
+            cmd.get_wizard().apply()
             # Close wiard
             cmd.wizard(None)
+
+            #Name the mutation
+            old_name = protein
+            new_name = protein + '2'
+            cmd.set_name(old_name, new_name)
+
+            #Fetch normal protein
+            cmd.fetch(protein)
+
+            # Align the structures
+            cmd.align(old_name, new_name)
+
+            # Generate the morph
+            cmd.morph("morph", old_name, new_name)
+
+            # Determine the number of states in the morph
+            number_of_states = cmd.count_states("morph")
+
+            # Save each state to a separate file
+            for state in range(1, number_of_states + 1):
+                filename = fr"C:\Users\LENOVO\Desktop\iGEM\Mutations\gtlmn-7y6i\gtm-{n}-{mutant}-{state}.pdb"
+                cmd.save(filename, "morph", state)
             
 
             #cmd.save(f"/Volumes/Anirudh/IISc/IGEM/gtlmn-7yg0/gtm-{n}-{mutant}.pdb")
 
 #change the residue number here          
-perMutant(475)
+perMutant('7y6i', 475)

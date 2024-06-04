@@ -31,16 +31,27 @@ sudo apt-get install apbs pdb2pqr
 ```
 
 This will download both of them which you can confirm using `apbs --help` or `pdb2pqr --help`.
-<br>Once this is done, you can use pdb2pqr inside the terminal. Good thing, it provides lots of options to set parameters.
+
+### PDB2PQR
+
+Once this is done, you can use pdb2pqr inside the terminal. Good thing, it provides lots of options to set parameters.
 
 ```bash
 # Example for Usage
 pdb2pqr --ff=amber --with-ph=7.0 --apbs-input protein.pdb protein.pqr # protein.pqr may not be present before
 ```
-
-This will create pqr files which be uploaded in webserver or whatever you want to do with it.
-
+For a better example case, as followed in the web-server, we will run the below command with more options-
+```bash
+pdb2pqr --ff=AMBER --apbs-input=protein.in --keep-chain --whitespace --drop-water --titration-state-method=propka --with-ph=7 protein.pdb protein.pqr
+```
+This is a really powerfull command for apbs, this does the following-
+1. Creates the pqr file with no-water, chain-id, -propka + ph=7, whitespace(for better looks)<br>The pqr fill contains only atom information and is independent of any parametric value.
+2. Create the .in file for apbs on its own, which is better since it judges the grid size and other factors on its own. We can edit it as well for any parametric changes.
 <br>
+The outputs are `protein.pqr`, `protein.in` with only input as `protein.pdb`.
+
+## APBS calculations
+
 For APBS, it has to be put in a file, which you make. The file should have a format(.in) where you mention the protein name and the parameters.
 <br>For example, the file may look like this:
 
@@ -88,7 +99,7 @@ end quit
 **Note**:
 1. All keywords mentioned here are required (ion is optional)
 2. mg-auto -> This automatically sets up and performs a string of single-point PBE calculations to "focus" on a region of interest (binding site, etc.) in a system. It is basically an automated version of mg-manual designed for easier use.
-3. 
+3. You need not write this file if you are using `--apbs-input=protein.in` flag while running pdb2pqr command. All values will be automatically set and we can `write` what files we want.
 <br>
 This you write a python file which puts various file names in pdb, you have a set of parameters set for all, and then run-
 
@@ -96,7 +107,13 @@ This you write a python file which puts various file names in pdb, you have a se
 apbs protein.in
 ```
 
-This will give you two files called protein_qdens.dx and protein_pot.dx(or similar naming scheme may apply) which can be visualized using VMD or Pymol.
-<br>See this link for a lot of tools you may need to use - https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x674.html
-<br>To understand more about file structures of pqr/others, refer: https://userguide.mdanalysis.org/stable/formats/reference/pqr.html
+This will give you two files called protein_qdens.dx and protein_pot.dx(or similar naming scheme may apply) which can be visualized using VMD or Pymol.<br>
+If we print energies on the command line, then we must calculate it in `ELEC` block. Do not ignore Terminal printed text.
+<br>
+Links to refer (Bibliography):
+
+- For a curated list of pdb2pqr tools, refer:  https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x674.html
+- To understand more about file structures of pqr/others, refer: https://userguide.mdanalysis.org/stable/formats/reference/pqr.html
+- For understanding .dx file structure, refer: https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x2674.html
+
 

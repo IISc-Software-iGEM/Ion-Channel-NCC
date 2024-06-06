@@ -64,7 +64,7 @@ def perMutant(protein, num):
 
             # Save each state to a separate file
             for state in range(1, number_of_states + 1):
-                filename = fr"C:\Users\LENOVO\Desktop\iGEM\Mutations\gtlmn-7y6i\gtm-{n}-{mutant}-{state}.pdb"
+                filename = fr"C:\Users\LENOVO\Code\forks\Ion-Channel-NCC\mutation_morphs\{protein}\gtm-{n}-{mutant}\gtm-{n}-{mutant}-{state}.pdb"
                 cmd.save(filename, "morph", state)
             
 

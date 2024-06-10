@@ -1,10 +1,13 @@
+from functools import lru_cache
+
 def is_number(s):
     try:
         float(s)
         return True
     except ValueError:
         return False
-
+    
+@lru_cache(maxsize=None)
 def extract(filepath, return_data=False):
     """
 # Data from APBS 3.4.1

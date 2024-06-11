@@ -110,7 +110,8 @@ apbs protein.in
 This will give you two files called protein_qdens.dx and protein_pot.dx(or similar naming scheme may apply) which can be visualized using VMD or Pymol.<br>
 If we print energies on the command line, then we must calculate it in `ELEC` block. Do not ignore Terminal printed text.
 <br>
-Links to refer (Bibliography):
+
+## Links to refer (Bibliography):
 
 - For a curated list of pdb2pqr tools, refer:  https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x674.html
 - To understand more about file structures of pqr/others, refer: https://userguide.mdanalysis.org/stable/formats/reference/pqr.html

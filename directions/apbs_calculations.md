@@ -113,7 +113,7 @@ If we print energies on the command line, then we must calculate it in `ELEC` bl
 
 ## Links to refer (Bibliography):
 
-- For a curated list of pdb2pqr tools, refer:  https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x674.html
+- For a curated list for commands for input file, refer:  https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x674.html
 - To understand more about file structures of pqr/others, refer: https://userguide.mdanalysis.org/stable/formats/reference/pqr.html
 - For understanding .dx file structure, refer: https://ics.uci.edu/~dock/manuals/apbs/html/user-guide/x2674.html
 

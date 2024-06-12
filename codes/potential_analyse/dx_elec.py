@@ -26,7 +26,8 @@ def compute_field(filepath):
     grad_x, grad_y, grad_z = np.gradient(potentials)
     # Compute the electric field
     Ex, Ey, Ez = -grad_x, -grad_y, -grad_z
-    
+    #Ex, Ey, Ez = grad_x, grad_y, grad_z
+
     if not compute_field.cache_info().hits:
         print("Field generation complete.")
 

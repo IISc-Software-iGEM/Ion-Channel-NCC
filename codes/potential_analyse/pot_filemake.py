@@ -3,7 +3,7 @@ from dx_pot_val import val_potential
 from dx_coord import coord_to_int
 from dx_elec import elec
 
-def filemaker(protein, pqr_file, pot_dx_file):
+def filemaker(protein, pqr_file, pot_dx_file, destination_file):
     """
     This will make our custom potential file.
     We want the coordinate, and the potential at that coordinate. 
@@ -18,7 +18,7 @@ def filemaker(protein, pqr_file, pot_dx_file):
         pqr_data= f.readlines()
 
     xmin, ymin, zmin, hx, hy, hz, nx, ny, nz= extract(pot_dx_file)
-    with open("/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/potential.txt", "w") as p:
+    with open(destination_file, "w") as p:
         p.write("Protein structure: " + protein + "\n")
         p.write("Origin(xmin, ymin, zmin): " + str(xmin) + " " + str(ymin) + " " + str(zmin) + "\n")   
         p.write("Grid Box Size(x y z): " + str(nx) + " " + str(ny) + " " + str(nz) + "\n")
@@ -37,5 +37,9 @@ def filemaker(protein, pqr_file, pot_dx_file):
                 '    '.join(line[:-5]), str(x), str(y), str(z), str(cx), str(cy), str(cz), str(q), str(r), str(potential), str(ex), str(ey), str(ez)))
     return
 print("Starting. . .")
-filemaker("7yg0", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/7yg0.pqr", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/7yg0_pot.dx")
-print("Your file is generated successfully.")
+try:
+    filemaker("7yg0", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/7yg0.pqr", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/7yg0_pot.dx", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/potential.txt")
+    print("Your file is generated successfully.")
+except Exception as e:
+    print("An error occured: ", e)
+    print("Process failed. Retry. . .")

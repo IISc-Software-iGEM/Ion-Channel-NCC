@@ -31,11 +31,19 @@ def filemaker(protein, pqr_file, pot_dx_file, destination_file):
             line = line.split()
             cx, cy, cz, q, r = line[-5], line[-4], line[-3], line[-2], line[-1]
             x,y,z = coord_to_int(cx, cy, cz, pot_dx_file)
-            potential = val_potential(cx, cy, cz, pot_dx_file)
-            ex, ey, ez = elec(x, y, z, pot_dx_file)
-            p.write("{:<10} {:<6} {:<6} {:<6} {:<6} {:<10} {:<10} {:<10} {:<10} {:<10} {:<25} {:<25} {:<25}\n".format(
+            try:
+                potential = val_potential(cx, cy, cz, pot_dx_file)
+                ex, ey, ez = elec(x, y, z, pot_dx_file)
+                p.write("{:<10} {:<6} {:<6} {:<6} {:<6} {:<10} {:<10} {:<10} {:<10} {:<10} {:<25} {:<25} {:<25}\n".format(
                 '    '.join(line[:-5]), str(x), str(y), str(z), str(cx), str(cy), str(cz), str(q), str(r), str(potential), str(ex), str(ey), str(ez)))
+            except Exception as e:
+                print("Error: ", e)
+                print("\033[91m\033[1mWARNING: \033[93mPotential and Gradient could not be calculated for coordinate:", cx, cy, cz, "\033[0m")
+                print("\033[93mAssuming potential and gradient to be 0. \033[0m")
+                p.write("{:<10} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<25} {:<25} {:<25}\n".format(
+                '    '.join(line[:-5]), str(x), str(y), str(z), str(cx), str(cy), str(cz), str(q), str(r), str(0), str(0), str(0), str(0)))
     return
+
 print("Starting. . .")
 try:
     filemaker("7yg0", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/7yg0.pqr", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/7yg0_pot.dx", "/Volumes/Anirudh/IISc/IGEM/Ion-Channel-NCC/codes/potential_analyse/potential.txt")

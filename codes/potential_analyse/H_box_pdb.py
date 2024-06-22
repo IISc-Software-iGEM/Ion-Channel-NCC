@@ -1,4 +1,3 @@
-# Import necessary library
 from potential_analyse.dx_pot_val import extract
 
 def H_box_pdb(filepath):

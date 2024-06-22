@@ -31,17 +31,41 @@ def filemaker(protein, pqr_file, pot_dx_file, destination_file):
             line = line.split()
             cx, cy, cz, q, r = line[-5], line[-4], line[-3], line[-2], line[-1]
             x,y,z = coord_to_int(cx, cy, cz, pot_dx_file)
+            ex, ey, ez, potential = 0, 0, 0, 0
+            typ, num, atom, resi, chain, c = line[0], line[1], line[2], line[3], "", 4
+            if isinstance(line[5], str):
+                chain = line[5]
+                c = 5
+
+            gap = 5
+            extra_gap = 25
+            # For demonstration, I'm assuming `typ`, `num`, etc., are defined somewhere above this code block
+            fields = [str(typ), str(num), str(atom), str(resi), str(chain) if c == 5 else "", str(x), str(y), str(z), str(cx), str(cy), str(cz), str(q), str(r), str(potential), str(ex), str(ey), str(ez)]
+            widths = [max(len(field) + (extra_gap if i >= len(fields) - 3 else gap), 10) for i, field in enumerate(fields)]
+
+            # Create a format string based on the calculated widths
+            format_str = ''.join(f"{{:<{width}}}" for width in widths) + "\n"
             try:
                 potential = val_potential(cx, cy, cz, pot_dx_file)
                 ex, ey, ez = elec(x, y, z, pot_dx_file)
-                p.write("{:<10} {:<6} {:<6} {:<6} {:<6} {:<10} {:<10} {:<10} {:<10} {:<10} {:<25} {:<25} {:<25}\n".format(
-                '    '.join(line[:-5]), str(x), str(y), str(z), str(cx), str(cy), str(cz), str(q), str(r), str(potential), str(ex), str(ey), str(ez)))
-            except Exception as e:
-                print("Error: ", e)
+                # Use the format string in the write method
+                if c == 5:
+                    p.write(format_str.format(typ, num, atom, resi, chain, x, y, z, cx, cy, cz, q, r, potential, ex, ey, ez))
+                else:
+                    # Exclude 'chain' for the else case
+                    p.write(format_str.format(typ, num, atom, resi, x, y, z, cx, cy, cz, q, r, potential, ex, ey, ez))
+                    
+            except FileNotFoundError:
                 print("\033[91m\033[1mWARNING: \033[93mPotential and Gradient could not be calculated for coordinate:", cx, cy, cz, "\033[0m")
                 print("\033[93mAssuming potential and gradient to be 0. \033[0m")
-                p.write("{:<10} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<25} {:<25} {:<25}\n".format(
-                '    '.join(line[:-5]), str(x), str(y), str(z), str(cx), str(cy), str(cz), str(q), str(r), str(0), str(0), str(0), str(0)))
+                # Use the format string in the write method
+                if c == 5:
+                    p.write(format_str.format(typ, num, atom, resi, chain, x, y, z, cx, cy, cz, q, 0,0,0,0))
+                else:
+                    # Exclude 'chain' for the else case
+                    p.write(format_str.format(typ, num, atom, resi, x, y, z, cx, cy, cz, q, r, 0,0,0,0))
+            except Exception as e:
+                print("\033[91m\033[1mERROR: \033[93mAn error occured while writing the file: ", e, "\033[0m")
     return
 
 print("Starting. . .")

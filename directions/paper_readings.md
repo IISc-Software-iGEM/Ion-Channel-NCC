@@ -71,7 +71,26 @@ When a protein's function cannot be experimentally determined, it can often be i
 - A sensible strategy to subject the target to a battery of different prediction methods. Web servers such as ProFunc and ProKnow are being developed to do just that.
 - This paper mainly talks about web servers, pre existing methods and nothing add new on his own. It is like a discussion on multiple methods.
 
-## 3. Protein function prediction as approximate semantic entailment
+## 3. ProFunc: a server for predicting protein function from 3D structure
+
+---
+
+doi: https://doi.org/10.1093/nar/gki414
+Other links:
+
+1. https://academic.oup.com/nar/article/33/suppl_2/W89/2505559
+
+---
+
+### Abstract
+
+ProFunc ( http://www.ebi.ac.uk/thornton-srv/databases/ProFunc ) is a web server for predicting the likely function of proteins whose 3D structure is known but whose function is not. Users submit the coordinates of their structure to the server in PDB format. ProFunc makes use of both existing and novel methods to analyse the protein's sequence and structure identifying functional motifs or close relationships to functionally characterized proteins. A summary of the analyses provides an at-a-glance view of what each of the different methods has found. More detailed results are available on separate pages. Often where one method has failed to find anything useful another may be more forthcoming. The server is likely to be of most use in structural genomics where a large proportion of the proteins whose structures are solved are of hypothetical proteins of unknown function. However, it may also find use in a comparative analysis of members of large protein families. It provides a convenient compendium of sequence and structural information that often hold vital functional clues to be followed up experimentally.
+
+### Notes
+
+-
+
+## 4. Protein function prediction as approximate semantic entailment
 
 ---
 
@@ -87,7 +106,7 @@ The Gene Ontology (GO) is a formal, axiomatic theory with over 100,000 axioms th
 GO for knowledge-enhanced learning has remained a challenge. We have developed DeepGO-SE, a method that predicts GO functions from protein sequences using a pretrained large language model. DeepGO-SE generates multiple approximate models of GO, and a neural network predicts the truth values of statements about protein functions in these approximate models. We aggregate the truth values over multiple models so that DeepGO-SE approximates semantic entailment when predicting protein functions.
 We show, using several benchmarks, that the approach effectively exploits background knowledge in the GO and improves protein function prediction compared to state-of-the-art methods.
 
-## 4. Structure-based protein function prediction using graph convolutional networks
+## 5. Structure-based protein function prediction using graph convolutional networks
 
 ---
 
@@ -102,6 +121,8 @@ doi: https://doi.org/10.1038/s41467-021-23303-9
 The rapid increase in the number of proteins in sequence databases and the diversity of their functions challenge computational approaches for automated function prediction. Here, we introduce DeepFRI, a Graph Convolutional Network for predicting protein functions by leveraging sequence features extracted from a protein language model and protein structures. It outperforms current leading methods and sequence-based Convolutional Neural Networks and scales to the size of current sequence repositories. Augmenting the training set of experimental structures with homology models allows us to significantly expand the number of predictable functions. DeepFRI has significant de-noising capability, with only a minor drop in performance when experimental structures are replaced by protein models. Class activation mapping allows function predictions at an unprecedented resolution, allowing site-specific annotations at the residue-level in an automated manner. We show the utility and high performance of our method by annotating structures from the PDB and SWISS-MODEL, making several new confident function predictions. DeepFRI is available as a webserver at https://beta.deepfri.flatironinstitute.org/.
 
 ## Other References for ML and Protein Analysis
+
+- Many basic studies present in [wikipedia](https://en.wikipedia.org/wiki/Protein_function_prediction#Network-based_methods)
 
 - Using A Neural Network and Spatial Clustering to Predict the Location of Active Sites in Enzymes
 
